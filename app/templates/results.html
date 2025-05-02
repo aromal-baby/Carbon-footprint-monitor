@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Your Carbon Footprint</h2>
+
+    <div class="results-container">
+        <div class="results-summary">
+            <h3>Summary</h3>
+            <p class="total-footprint">Total Annual Carbon Footprint: <strong>{{ "%.2f"|format(footprint_data.total) }} kg CO2e</strong></p>
+
+            {% if footprint_data.per_capita %}
+            <p class="per-capita-footprint">Per Capita Annual Carbon Footprint: <strong>{{ "%.2f"|format(footprint_data.per_capita) }} kg CO2e</strong></p>
+            {% endif %}
+
+            <!-- Global context - you would calculate this dynamically -->
+            {% set global_average = 5000 %}
+            {% set sustainable_level = 2000 %}
+
+            <p>Global Average: {{ global_average }} kg CO2e per person per year</p>
+            <p>Sustainable Level: {{ sustainable_level }} kg CO2e per person per year</p>
+
+            {% if footprint_data.per_capita %}
+            {% if footprint_data.per_capita < sustainable_level %}
+            <p class="sustainability-message good">Your carbon footprint is below the sustainable level. Great job!</p>
+            {% elif footprint_data.per_capita < global_average %}
+            <p class="sustainability-message moderate">Your carbon footprint is below the global average but above the sustainable level.</p>
+            {% else %}
+            <p class="sustainability-message high">Your carbon footprint is above the global average.</p>
+            {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="results-breakdown">
+            <h3>Breakdown by Category</h3>
+
+            <div class="categories">
+                {% for category, data in footprint_data.categories.items() %}
+                <div class="category">
+                    <h4>{{ category|capitalize }}</h4>
+                    <p class="category-total">{{ "%.2f"|format(data.total) }} kg CO2e</p>
+                    <p class="category-percentage">{{ "%.1f"|format(data.total / footprint_data.total * 100) }}% of total</p>
+
+                    <div class="breakdown-details">
+                        {% for item, value in data.breakdown.items() %}
+                        <div class="breakdown-item">
+                            <span class="item-name">{{ item|replace('_', ' ')|capitalize }}</span>
+                            <span class="item-value">{{ "%.2f"|format(value) }} kg CO2e</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="results-recommendations">
+            <h3>Recommendations</h3>
+            <p>Based on your carbon footprint, here are some suggestions to reduce your emissions:</p>
+
+            <ul class="recommendations-list">
+                <!-- In a complete implementation, you would generate specific recommendations -->
+                <li>If you're a regular car user, consider using public transportation or cycling for shorter trips.</li>
+                <li>Switch to a renewable energy provider to reduce your electricity emissions.</li>
+                <li>Reduce your air travel or offset your flight emissions through verified carbon offset projects.</li>
+                <li>Improve home insulation to reduce heating needs and associated emissions.</li>
+            </ul>
+        </div>
+
+        <a href="{{ url_for('index') }}" class="button">Start Over</a>
+    </div>
+{% endblock %}

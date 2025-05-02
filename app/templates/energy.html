@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Energy Usage Data</h2>
+    <p>Please provide information about your energy consumption.</p>
+
+    <form method="post" action="{{ url_for('energy_entry') }}">
+        <!-- Electricity Usage -->
+        <div class="form-section">
+            <h3>Electricity</h3>
+
+            <div class="form-group">
+                <label for="monthly_kwh">Monthly electricity usage (kWh):</label>
+                <input type="number" name="monthly_kwh" id="monthly_kwh" min="0" step="0.1" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="renewable_percentage">Percentage of electricity from renewable sources (0-100):</label>
+                <input type="number" name="renewable_percentage" id="renewable_percentage" min="0" max="100" value="0">
+            </div>
+        </div>
+
+        <!-- Natural Gas Usage -->
+        <div class="form-section">
+            <h3>Natural Gas</h3>
+
+            <div class="form-group">
+                <label>Do you use natural gas for heating?</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="has_gas" value="yes" onchange="toggleGasFields(true)"> Yes
+                    </label>
+                    <label>
+                        <input type="radio" name="has_gas" value="no" onchange="toggleGasFields(false)" checked> No
+                    </label>
+                </div>
+            </div>
+
+            <div id="gas_fields" style="display: none;">
+                <div class="form-group">
+                    <label for="gas_monthly_usage">Monthly natural gas usage (m³):</label>
+                    <input type="number" name="gas_monthly_usage" id="gas_monthly_usage" min="0" step="0.1" value="0">
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="button">Calculate Footprint</button>
+    </form>
+
+    <script>
+        function toggleGasFields(show) {
+            document.getElementById('gas_fields').style.display = show ? 'block' : 'none';
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Transportation Data</h2>
+    <p>Please provide information about your transportation habits.</p>
+
+    <form method="POST" action="{{ url_for('transportation_entry') }}">
+        <!-- Car usage -->
+        <div class="form-section">
+            <h3>Car Usage</h3>
+
+            <div class="form-group">
+                <label>Do you use a car?</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="has_car" value="yes" onchange="toggleCarFields(true)"> Yes
+                    </label>
+                    <label>
+                        <input type="radio" name="has_car" value="no" onchange="toggleCarFields(false)" checked> No
+                    </label>
+                </div>
+            </div>
+
+            <div id="car_fields" style="display:none;">
+                <div class="form-group">
+                    <label for="car_weekly_km">Average weekly car travel (km):</label>
+                    <input type="number" name="car_weekly_km" id="car_weekly_km" min="0" step="0.1" value="0">
+                </div>
+
+                <div class="form-group">
+                    <label for="car_fuel-type">Fuel type:</label>
+                    <select name="car_fuel_type" id="car_fuel-type">
+                        <option value="petrol">Petrol</option>
+                        <option value="diesel">Diesel</option>
+                        <option value="hybrid">Hybrid</option>
+                        <option value="electric">Electric</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Public Transportation -->
+        <div class="form-section">
+            <h3>Public Transportation</h3>
+
+            <div class="form-group">
+                <label>Do you use public transportation?</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="has_public_transport" value="yes" onchange="togglePublicTransportFields(true)"> Yes
+                    </label>
+                    <label>
+                        <input type="radio" name="has_public_transport" value="no" onchange="togglePublicTransportFields(false)" checked> No
+                    </label>
+                </div>
+            </div>
+
+            <div id="public_transport_fields" style="display: none;">
+                <div class="form-group">
+                    <label for="public_transport_weekly_km">Average weekly public transport travel (km):</label>
+                    <input type="number" name="public_transport_weekly_km" id="public_transport_weekly_km" min="0" step="0.1" value="0">
+                </div>
+            </div>
+        </div>
+
+        <!-- Air Travel -->
+        <div class="form-section">
+            <h3>Air Travel</h3>
+
+            <div class="form-group">
+                <label>Do you travel by air?</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="has_air_travel" value="yes" onchange="toggleAirTravelFields(true)"> Yes
+                    </label>
+                    <label>
+                        <input type="radio" name="has_air_travel" value="no" onchange="toggleAirTravelFields(false)" checked> No
+                    </label>
+                </div>
+            </div>
+
+            <div id="air_travel_fields" style="display: none;">
+                <div class="form-group">
+                    <label for="short_flights">Number of short flights (<1500 km) per year:</label>
+                    <input type="number" name="short_flights" id="short_flights" min="0" value="0">
+                </div>
+
+                <div class="form-group">
+                    <label for="long_flights">Number of long flights (>1500 km) per year:</label>
+                    <input type="number" name="long_flights" id="long_flights" min="0" value="0">
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="button">Continue</button>
+    </form>
+    <script>
+        function toggleCarFields(show) {
+            document.getElementById("car_fields").style.display = show ? 'block' : 'none';
+        }
+
+        function togglePublicTransportFields(show) {
+            document.getElementById("public_transport_fields").style.display = show ? 'block' : 'none';
+        }
+
+        function toggleAirTravelFields(show) {
+            document.getElementById("air_travel_fields").style.display = show ? 'block' : 'none';
+        }
+    </script>
+
+{% endblock %}
