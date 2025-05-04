@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Waste Data</h2>
+    <p>Please provide information about your waste generation and recycling habits.</p>
+
+    <form method="post" action="{{ url_for('waste_entry') }}">
+        <!-- General Waste -->
+        <div class="form-section">
+            <h3>General Waste</h3>
+            <div class="form-group">
+                <label for="weekly_kg">Weekly non-recycled waste (kg):</label>
+                <input type="number" name="weekly_kg" id="weekly_kg" min="0" step="0.1" value="0">
+            </div>
+        </div>
+
+        <!-- Recycling -->
+        <div class="form-section">
+            <h3>Recycling</h3>
+            <div class="form-group">
+                <label for="paper">Weekly paper recycling (kg):</label>
+                <input type="number" name="paper" id="paper" min="0" step="0.1" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="plastic">Weekly plastic recycling (kg):</label>
+                <input type="number" name="plastic" id="plastic" min="0" step="0.1" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="glass">Weekly glass recycling (kg):</label>
+                <input type="number" name="glass" id="glass" min="0" step="0.1" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="metal">Weekly metal recycling (kg):</label>
+                <input type="number" name="metal" id="metal" min="0" step="0.1" value="0">
+            </div>
+        </div>
+
+        <!-- Composting -->
+        <div class="form-section">
+            <h3>Composting</h3>
+            <div class="form-group">
+                <label>Do you compost organic waste?</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="composting" value="yes"> Yes
+                    </label>
+                    <label>
+                        <input type="radio" name="composting" value="no" checked> No
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="button">Continue</button>
+    </form>
+{% endblock %}

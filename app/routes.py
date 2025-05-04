@@ -1,8 +1,9 @@
 from flask import render_template, request, redirect, url_for, session, flash, jsonify
-from matplotlib.pyplot import title
 
 from app import app
 from app.models.carbon_calculator import CarbonCalculator
+from app.services import data_service
+from app.services.data_service import DataService
 import json
 import os
 import datetime
@@ -123,9 +124,115 @@ def energy():
         # In a complete implementation, you would continue with those forms
 
         # Calculate footprint and show results
-        return redirect(url_for('results'))
+        return redirect(url_for('waste_entry'))
 
     return render_template('energy.html', title='Energy Data')
+
+
+@app.route('/waste', methods=['GET', 'POST'])
+def waste_entry():
+    """Waste data entry form"""
+    if 'user_data' not in session:
+        # Redirect to initial data entry if there is nothing
+        return redirect(url_for('data_entry'))
+
+    if request.method == 'POST':
+        waste_data = {}
+
+        # General waste
+        waste_data['general_waste'] = {
+            'weekly_kg': float(request.form.get('weekly_kg', 0))
+        }
+
+        # Recycling
+        waste_data['recycling'] = {
+            'paper': float(request.form.get('paper', 0)),
+            'plastic': float(request.form.get('plastic', 0)),
+            'glass': float(request.form.get('glass', 0)),
+            'metal': float(request.form.get('metal', 0))
+        }
+
+        # Composting
+        waste_data['composting'] = True if request.form.get('composting') == 'yes' else False
+
+        # Add waste data to session
+        user_data = session.get('user_data', {})
+        user_data['waste'] = waste_data
+        session['user_data'] = user_data
+
+        # Redirect to food data entry
+        return redirect(url_for('food_entry'))
+
+    return render_template('waste.html', title='Waste Data')
+
+
+@app.route('/food', methods=['GET', 'POST'])
+def food_entry():
+    """Food data entry form"""
+    if 'user_data' not in session:
+        # Redirect to initial data entry if no user data exists
+        return redirect(url_for('data_entry'))
+
+    if request.method == 'POST':
+        food_data = {}
+
+        # Diet type
+        food_data['diet_type'] = request.form.get('diet_type', 'omnivore')
+
+        # Meat consumption
+        if food_data['diet_type'] in ['omnivore', 'pescatarian']:
+            food_data['meat_consumption'] = {}
+
+            if food_data['diet_type'] == 'omnivore':
+                food_data['meat_consumption']['red_meat'] = float(request.form.get('red_meat', 0))
+                food_data['meat_consumption']['poultry'] = float(request.form.get('poultry', 0))
+
+            food_data['meat_consumption']['fish'] = float(request.form.get('fish', 0))
+
+        # Local food
+        food_data['local_food_percentage'] = float(request.form.get('local_food_percentage', 0))
+
+        # Add food data to session
+        user_data = session.get('user_data', {})
+        user_data['food'] = food_data
+        session['user_data'] = user_data
+
+        # Redirect to products data entry
+        return redirect(url_for('products_entry'))
+
+    return render_template('food.html', title='Food Data')
+
+
+@app.route('/products', methods=['GET', 'POST'])
+def products_entry():
+    """Products data entry form"""
+    if 'user_data' not in session:
+        # Redirect to initial data entry if no user data exists
+        return redirect(url_for('data_entry'))
+
+    if request.method == 'POST':
+        products_data = {}
+
+        # Monthly spending
+        products_data['monthly_spending'] = {
+            'clothing': float(request.form.get('clothing', 0)),
+            'electronics': float(request.form.get('electronics', 0)),
+            'household_items': float(request.form.get('household_items', 0))
+        }
+
+        # Secondhand percentage
+        products_data['secondhand_percentage'] = float(request.form.get('secondhand_percentage', 0))
+
+        # Add products data to session
+        user_data = session.get('user_data', {})
+        user_data['products'] = products_data
+        session['user_data'] = user_data
+
+        # Calculate footprint and show results
+        return redirect(url_for('results'))
+
+    return render_template('products.html', title='Products Data')
+
 
 @app.route('/results')
 def results():
@@ -140,10 +247,33 @@ def results():
     footprint_data = calculator.calculate_footprint(user_data)
 
 
-    # Save data and results (for a real application)
-    # save_report(user_data, footprint_data)
+    # Save data and results
+    data_service.save_report(user_data, footprint_data)
 
     return render_template('results.html',
                            title='Your Carbon Footprint',
                            user_data=user_data,
                            footprint_data=footprint_data)
+
+
+
+@app.route('/reports')
+def reports_list():
+    """List all saved reports"""
+    reports = data_service.get_all_reports()
+    return render_template('reports.html', title='Saved Reports', reports=reports)
+
+
+@app.route('/reports/<filename>')
+def view_report(filename):
+    """View a specific report"""
+    report_data = data_service.get_report(filename)
+
+    if not report_data:
+        flash('Report not found.', 'error')
+        return redirect(url_for('reports_list'))
+
+    return render_template('view_report.html',
+                           title='View Report',
+                           report_data=report_data)
+

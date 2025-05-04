@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Product Purchases Data</h2>
+    <p>Please provide information about your product purchases.</p>
+
+    <form method="post" action="{{ url_for('products_entry') }}">
+        <!-- Monthly Spending -->
+        <div class="form-section">
+            <h3>Monthly Spending</h3>
+            <div class="form-group">
+                <label for="clothing">Monthly spending on clothing (€):</label>
+                <input type="number" name="clothing" id="clothing" min="0" step="0.01" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="electronics">Monthly spending on electronics (€):</label>
+                <input type="number" name="electronics" id="electronics" min="0" step="0.01" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="household_items">Monthly spending on household items (€):</label>
+                <input type="number" name="household_items" id="household_items" min="0" step="0.01" value="0">
+            </div>
+        </div>
+
+        <!-- Second-hand Percentage -->
+        <div class="form-section">
+            <h3>Second-hand Purchases</h3>
+            <div class="form-group">
+                <label for="secondhand_percentage">Percentage of purchases that are second-hand (0-100):</label>
+                <input type="number" name="secondhand_percentage" id="secondhand_percentage" min="0" max="100" value="0">
+            </div>
+        </div>
+
+        <button type="submit" class="button">Calculate Footprint</button>
+    </form>
+{% endblock %}

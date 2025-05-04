@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Saved Reports</h2>
+
+    {% if not reports %}
+    <p>No reports found. Start by <a href="{{ url_for('data_entry') }}">creating a new carbon footprint assessment</a>.</p>
+    {% else %}
+    <div class="reports-list">
+        <table>
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Total Footprint</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for report in reports %}
+            <tr>
+                <td>{{ report.date }}</td>
+                <td>{{ report.name }}</td>
+                <td>{{ "%.2f"|format(report.total_footprint) }} kg CO2e</td>
+                <td><a href="{{ url_for('view_report', filename=report.filename) }}">View</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    <p class="action-links">
+        <a href="{{ url_for('data_entry') }}" class="button">Create New Assessment</a>
+    </p>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Food Consumption Data</h2>
+    <p>Please provide information about your food consumption habits.</p>
+
+    <form method="post" action="{{ url_for('food_entry') }}">
+        <!-- Diet Type -->
+        <div class="form-section">
+            <h3>Diet Type</h3>
+            <div class="form-group">
+                <label for="diet_type">What type of diet do you follow?</label>
+                <select name="diet_type" id="diet_type" onchange="toggleMeatFields()">
+                    <option value="omnivore">Omnivore (meat, dairy, plants)</option>
+                    <option value="pescatarian">Pescatarian (fish, dairy, plants)</option>
+                    <option value="vegetarian">Vegetarian (dairy, plants)</option>
+                    <option value="vegan">Vegan (plants only)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Meat Consumption -->
+        <div id="meat_fields" class="form-section">
+            <h3>Meat & Fish Consumption</h3>
+            <div id="red_meat_field" class="form-group">
+                <label for="red_meat">Weekly red meat consumption (kg):</label>
+                <input type="number" name="red_meat" id="red_meat" min="0" step="0.01" value="0">
+            </div>
+
+            <div id="poultry_field" class="form-group">
+                <label for="poultry">Weekly poultry consumption (kg):</label>
+                <input type="number" name="poultry" id="poultry" min="0" step="0.01" value="0">
+            </div>
+
+            <div id="fish_field" class="form-group">
+                <label for="fish">Weekly fish consumption (kg):</label>
+                <input type="number" name="fish" id="fish" min="0" step="0.01" value="0">
+            </div>
+        </div>
+
+        <!-- Local Food -->
+        <div class="form-section">
+            <h3>Local Food</h3>
+            <div class="form-group">
+                <label for="local_food_percentage">Percentage of food that is locally produced (0-100):</label>
+                <input type="number" name="local_food_percentage" id="local_food_percentage" min="0" max="100" value="0">
+            </div>
+        </div>
+
+        <button type="submit" class="button">Continue</button>
+    </form>
+
+    <script>
+        function toggleMeatFields() {
+            var dietType = document.getElementById('diet_type').value;
+            var redMeatField = document.getElementById('red_meat_field');
+            var poultryField = document.getElementById('poultry_field');
+            var fishField = document.getElementById('fish_field');
+            var meatFields = document.getElementById('meat_fields');
+
+            if (dietType === 'vegan' || dietType === 'vegetarian') {
+                meatFields.style.display = 'none';
+            } else {
+                meatFields.style.display = 'block';
+
+                if (dietType === 'pescatarian') {
+                    redMeatField.style.display = 'none';
+                    poultryField.style.display = 'none';
+                    fishField.style.display = 'block';
+                } else { // omnivore
+                    redMeatField.style.display = 'block';
+                    poultryField.style.display = 'block';
+                    fishField.style.display = 'block';
+                }
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', toggleMeatFields);
+    </script>
+{% endblock %}
