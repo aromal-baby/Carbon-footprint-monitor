@@ -99,7 +99,7 @@ def get_report(self, filename):
         return None
 
 
-def _get_report_name(self, user_data):
+def get_report_name(self, user_data):
     """Get the name to display for a report"""
     if user_data.get('user_type') == 'Organization':
         return user_data.get('org_name', 'Unknown Organization')

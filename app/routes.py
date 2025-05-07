@@ -2,19 +2,22 @@ from flask import render_template, request, redirect, url_for, session, flash, j
 
 from app import app
 from app.models.carbon_calculator import CarbonCalculator
-from app.services import data_service
 from app.services.data_service import DataService
+from app.services.report_service import ReportService
 import json
 import os
 import datetime
 
-# Create calculator instance
-calculator = CarbonCalculator()
+
+calculator = CarbonCalculator()     # Calculator instance
+data_service = DataService()        # Data service instance
+report_service = ReportService()    # Report service instance
+
 
 @app.route('/')
 def index():
     """Home page route"""
-    return render_template('index.html', title='Carbon Footprint Monitor')
+    return render_template('home.html', title='Carbon Footprint Monitor')
 
 @app.route('/about')
 def about():
@@ -246,6 +249,8 @@ def results():
     # Calculate carbon footprint
     footprint_data = calculator.calculate_footprint(user_data)
 
+    # Generate charts
+    charts = report_service.generate_charts(footprint_data)
 
     # Save data and results
     data_service.save_report(user_data, footprint_data)

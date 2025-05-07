@@ -46,6 +46,24 @@
             {% endif %}
         </div>
 
+        <div class="results-charts">
+            <h3>Visualizations</h3>
+
+            {% if charts.category_breakdown %}
+            <div class="chart">
+                <h4>Carbon Footprint by Category</h4>
+                <img src="{{ charts.category_breakdown }}" alt="Category Breakdown Chart">
+            </div>
+            {% endif %}
+
+            {% if charts.comparison %}
+            <div class="chart">
+                <h4>Comparison with Global Benchmarks</h4>
+                <img src="{{ charts.comparison }}" alt="Comparison Chart">
+            </div>
+            {% endif %}
+        </div>
+
         <div class="results-breakdown">
             <h3>Breakdown by Category</h3>
 
