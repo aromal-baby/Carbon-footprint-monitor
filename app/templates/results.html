@@ -62,7 +62,19 @@
                         {% for item, value in data.breakdown.items() %}
                         <div class="breakdown-item">
                             <span class="item-name">{{ item|replace('_', ' ')|capitalize }}</span>
+                            {% if value is mapping %}
+                            <!-- Handle nested dictionaries differently -->
+                            <div class="nested-breakdown">
+                                {% for subitem, subvalue in value.items() %}
+                                <div class="breakdown-subitem">
+                                    <span class="subitem-name">{{ subitem|replace('_', ' ')|capitalize }}</span>
+                                    <span class="subitem-value">{{ "%.2f"|format(subvalue) }} kg CO2e</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% else %}
                             <span class="item-value">{{ "%.2f"|format(value) }} kg CO2e</span>
+                            {% endif %}
                         </div>
                         {% endfor %}
                     </div>

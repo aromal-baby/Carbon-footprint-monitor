@@ -92,12 +92,15 @@ def transportation_entry():
         user_data['transportation'] = transportation_data
         session['user_data'] = user_data
 
-        # Redirect to energy data form
-        return render_template('transportation.html', title='Transportation Data')
+        # To energy data entry
+        return redirect(url_for('energy_entry'))
+
+    # Redirect to energy data form
+    return render_template('transportation.html', title='Transportation Data')
 
 
 @app.route('/energy', methods=['GET', 'POST'])
-def energy():
+def energy_entry ():
     """Energy data entry form"""
     if 'user_data' not in session:
         # Redirect to initial data entry if there is nothing
@@ -258,7 +261,8 @@ def results():
     return render_template('results.html',
                            title='Your Carbon Footprint',
                            user_data=user_data,
-                           footprint_data=footprint_data)
+                           footprint_data=footprint_data,
+                           charts=charts)
 
 
 
@@ -274,11 +278,14 @@ def view_report(filename):
     """View a specific report"""
     report_data = data_service.get_report(filename)
 
+    charts = report_service.generate_charts(report_data)
+
     if not report_data:
         flash('Report not found.', 'error')
         return redirect(url_for('reports_list'))
 
     return render_template('view_report.html',
                            title='View Report',
-                           report_data=report_data)
+                           report_data=report_data,
+                           charts=charts)
 
