@@ -1,17 +1,22 @@
-from flask import render_template, request, redirect, url_for, session, flash, jsonify
+from flask import render_template, request, redirect, url_for, session, flash, jsonify, send_file
+from pkg_resources import safe_name
 
 from app import app
 from app.models.carbon_calculator import CarbonCalculator
+from app.services import pdf_service
 from app.services.data_service import DataService
 from app.services.report_service import ReportService
+from app.services.pdf_service import PDFService
 import json
 import os
+import io
 import datetime
 
 
 calculator = CarbonCalculator()     # Calculator instance
 data_service = DataService()        # Data service instance
 report_service = ReportService()    # Report service instance
+pdf_service =PDFService()           # PDF service instance
 
 
 @app.route('/')
@@ -289,3 +294,44 @@ def view_report(filename):
                            report_data=report_data,
                            charts=charts)
 
+
+
+@app.route('/download-report')
+def download_report():
+    """Generate and download the PDF report"""
+    if 'user_data' not in session:
+        # Redirecting to initial data entry if nothing is entered
+        return redirect(url_for('data_entry'))
+
+    user_data = session.get('user_data', {})
+
+    # Calc footprint
+    footprint_data = calculator.calculate_footprint(user_data)
+
+    # Generating charts
+    charts = report_service.generate_charts(footprint_data)
+
+    # Generating PDF report
+    pdf = pdf_service.generate_report_pdf(user_data, footprint_data, charts)
+
+    # Create a file-like object from the PDF data
+    pdf_buffer = io.BytesIO(pdf)
+    pdf_buffer.seek(0)
+
+    # Determining the file name
+    if user_data.get('user_type') == 'Organization':
+        name = user_data.get('org_name', 'Unknown')
+    else:
+        name = user_data.get('name', 'Unknown')
+
+    # Cleaning the name for the filename
+    safe_name = ''.join(c if c.isalnum() else '_' for c in name)
+    filename = f"carbon_footprint_report_{safe_name}.pdf"
+
+    # Sending the PDF as a downloadable file
+    return send_file(
+        pdf_buffer,
+        as_attachment=True,
+        download_name=filename,
+        mimetype='application/pdf',
+    )

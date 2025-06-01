@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - Carbon Footprint Monitor</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <header>
-        <h1>Carbon Footprint Monitor</h1>
+    <header class="header">
+        <div class="header-logo">Carbon Footprint Monitor</div>
         <nav>
             <ul>
                 <li><a href="{{ url_for('index') }}">Home</a></li>
@@ -24,7 +26,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 - EcoTrack Carbon Footprint Monitor</p>
+        <p>&copy: 2025 - Carbon Footprint Monitor | Commited to a Sustainable Future</p>
     </footer>
 </body>
 </html>
