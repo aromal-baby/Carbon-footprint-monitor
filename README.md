@@ -115,6 +115,7 @@ mode of transports.
 ## Example Usage
 
 ```python
+
    # Example: Calculate carbon footprint
    from app.models.carbon_calculator import CarbonCalculator
    
@@ -127,7 +128,160 @@ mode of transports.
    results = calculator.calculate_footprint(user_data)
    print(f"Total footprint: {results['total']:.2f} kg CO2e")
 
+```
 ## Testing
 
 ```bash
-  python -m pytest tests/
+   python -m pytest tests/
+```
+
+## Generated Reports
+
+The application generates:
+
+- **PDF Reports**: Comprehensive analysis with charts and recommendations
+- **JSON Data**: Structured data for trend analysis
+- **Visual Charts**: Category breakdowns and benchmark comparisons
+
+
+## Global Benchmarking
+
+EcoTrack provides real-time comparisons with:
+
+- Country-specific averages
+- Global emission averages
+- Paris Agreement sustainability targets (2.0 tonnes CO2 per person)
+
+
+## Future Enhancements
+
+- Real-time carbon tracking integration
+- Mobile application development
+- Enhanced recommendation algorithms
+- Corporate sustainability dashboard
+- Carbon offset marketplace integration
+
+## Academic Context
+
+This project was developed as part of the M602 Computer Programming course at Gisma University of Applied Sciences, demonstrating:
+
+- Object-oriented programming principles
+- API integration and data processing
+- Web application development
+- Professional software documentation
+- Error handling and user experience design
+
+
+## Acknowledgments
+
+- **Our World in Data** for providing reliable carbon emissions data
+- **Gisma University** for project guidance and support
+- **Flask Community** for excellent documentation and resources
+- **Environmental Organizations** for emission factor research
+
+## Contact
+
+Aromal Baby
+
+- GitHub: @aromal-baby
+- Project Link: https://github.com/aromal-baby/Carbon-footprint-monitor
+
+Built with 💚 for a sustainable future
+
+### 1.2 Create Supporting Documentation Files
+
+#### Create `INSTALL.md`:
+```markdown
+   # Installation Guide
+   
+   ## System Requirements
+   - Python 3.13 or higher
+   - 4GB RAM minimum
+   - 500MB free disk space
+   - Internet connection for API access
+   
+   ## Detailed Setup
+   
+   ### Windows
+   1. Download Python from python.org
+   2. Open Command Prompt as Administrator
+   3. Navigate to project directory
+   4. Run installation commands
+   
+   ### macOS
+   1. Install Python via Homebrew: `brew install python`
+   2. Follow standard installation steps
+   
+   ### Linux
+   1. Install Python: `sudo apt-get install python3`
+   2. Install pip: `sudo apt-get install python3-pip`
+   3. Follow standard installation steps
+   
+   ## Troubleshooting
+   - **Port 5000 in use**: Change port in run.py
+   - **Permission errors**: Run as administrator
+   - **API errors**: Check internet connection### 1.2 Create Supporting Documentation Files
+   
+   #### Create `INSTALL.md`:
+   ```markdown
+   # Installation Guide
+   
+   ## System Requirements
+   - Python 3.13 or higher
+   - 4GB RAM minimum
+   - 500MB free disk space
+   - Internet connection for API access
+   
+   ## Detailed Setup
+   
+   ### Windows
+   1. Download Python from python.org
+   2. Open Command Prompt as Administrator
+   3. Navigate to project directory
+   4. Run installation commands
+   
+   ### macOS
+   1. Install Python via Homebrew: `brew install python`
+   2. Follow standard installation steps
+   
+   ### Linux
+   1. Install Python: `sudo apt-get install python3`
+   2. Install pip: `sudo apt-get install python3-pip`
+   3. Follow standard installation steps
+   
+   ## Troubleshooting
+   - **Port 5000 in use**: Change port in run.py
+   - **Permission errors**: Run as administrator
+   - **API errors**: Check internet connection
+```
+
+## Create ARCHITECTURE.md
+
+```markdown
+   # System Architecture
+   
+   ## Overview
+   EcoTrack follows a modular MVC architecture pattern optimized for scalability and maintainability.
+   
+   ## Component Breakdown
+   
+   ### Models Layer
+   - `carbon_calculator.py`: Core calculation engine
+   - `emission_factors.py`: Scientific constants and factors
+   
+   ### Services Layer
+   - `benchmark_service.py`: External API integration
+   - `currency_service.py`: Multi-currency support
+   - `data_service.py`: Data persistence
+   - `pdf_service.py`: Report generation
+   - `report_service.py`: Visualization creation
+   
+   ### View Layer
+   - `routes.py`: Request handling and business logic
+   - `templates/`: HTML templates with Jinja2
+   - `static/`: CSS, JavaScript, and assets
+   
+   ## Data Flow
+   1. User input → Routes → Services → Models
+   2. Calculations → Services → Templates → User display
+   3. Reports → PDF Service → File download
