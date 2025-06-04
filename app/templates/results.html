@@ -9,24 +9,73 @@
             <p class="total-footprint">Total Annual Carbon Footprint: <strong>{{ "%.2f"|format(footprint_data.total) }} kg CO2e</strong></p>
 
             {% if footprint_data.per_capita %}
-            <p class="per-capita-footprint">Per Capita Annual Carbon Footprint: <strong>{{ "%.2f"|format(footprint_data.per_capita) }} kg CO2e</strong></p>
+                <p class="per-capita-footprint">Per Capita Annual Carbon Footprint: <strong>{{ "%.2f"|format(footprint_data.per_capita) }} kg CO2e</strong></p>
             {% endif %}
 
-            <!-- Global context - you would calculate this dynamically -->
-            {% set global_average = 5000 %}
-            {% set sustainable_level = 2000 %}
+            <!-- Dynamic Benchmark Comparisons from Our World in Data API -->
+            {% if benchmarks %}
+                <div class="benchmark-comparisons">
+                    <h4>🌍 How You Compare Globally</h4>
+                    <div class="benchmark-grid">
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">{{ benchmarks.user_country }} Average:</span>
+                            <span class="benchmark-value">{{ "%.0f"|format(benchmarks.country_avg * 1000) }} kg CO2e</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">Global Average:</span>
+                            <span class="benchmark-value">{{ "%.0f"|format(benchmarks.global_avg * 1000) }} kg CO2e</span>
+                        </div>
+                        <div class="benchmark-item sustainable">
+                            <span class="benchmark-label">Sustainable Target:</span>
+                            <span class="benchmark-value">{{ "%.0f"|format(benchmarks.sustainable_target * 1000) }} kg CO2e</span>
+                        </div>
+                    </div>
 
-            <p>Global Average: {{ global_average }} kg CO2e per person per year</p>
-            <p>Sustainable Level: {{ sustainable_level }} kg CO2e per person per year</p>
+                    <!-- Dynamic Comparison Message -->
+                    {% set user_footprint = footprint_data.per_capita if footprint_data.per_capita else footprint_data.total %}
+                    {% set country_avg_kg = benchmarks.country_avg * 1000 %}
+                    {% set global_avg_kg = benchmarks.global_avg * 1000 %}
+                    {% set sustainable_kg = benchmarks.sustainable_target * 1000 %}
 
-            {% if footprint_data.per_capita %}
-            {% if footprint_data.per_capita < sustainable_level %}
-            <p class="sustainability-message good">Your carbon footprint is below the sustainable level. Great job!</p>
-            {% elif footprint_data.per_capita < global_average %}
-            <p class="sustainability-message moderate">Your carbon footprint is below the global average but above the sustainable level.</p>
+                    {% if user_footprint < sustainable_kg %}
+                        <p class="sustainability-message good">🎉 Excellent! Your carbon footprint is below the sustainable level!</p>
+                    {% elif user_footprint < country_avg_kg %}
+                        <p class="sustainability-message moderate">👍 Good! You're below {{ benchmarks.user_country }}'s average, but there's room for improvement.</p>
+                    {% elif user_footprint < global_avg_kg %}
+                        <p class="sustainability-message moderate">📊 You're below the global average but above {{ benchmarks.user_country }}'s average.</p>
+                    {% else %}
+                        <p class="sustainability-message high">⚠️ Your footprint is above both {{ benchmarks.user_country }} and global averages. Let's work on reducing it!</p>
+                    {% endif %}
+
+                    <div class="benchmark-details">
+                        <small>📊 Data from Our World in Data ({{ benchmarks.data_year }})</small>
+                        {% if benchmarks.note %}
+                            <small class="fallback-note">⚠️ {{ benchmarks.note }}</small>
+                        {% endif %}
+                    </div>
+                </div>
             {% else %}
-            <p class="sustainability-message high">Your carbon footprint is above the global average.</p>
-            {% endif %}
+                <!-- Fallback to static values if API fails -->
+                {% set global_average = 5000 %}
+                {% set sustainable_level = 2000 %}
+
+                <div class="benchmark-comparisons">
+                    <h4>🌍 Global Context</h4>
+                    <p>Global Average: {{ global_average }} kg CO2e per person per year</p>
+                    <p>Sustainable Level: {{ sustainable_level }} kg CO2e per person per year</p>
+
+                    {% if footprint_data.per_capita %}
+                        {% if footprint_data.per_capita < sustainable_level %}
+                            <p class="sustainability-message good">Your carbon footprint is below the sustainable level. Great job!</p>
+                        {% elif footprint_data.per_capita < global_average %}
+                            <p class="sustainability-message moderate">Your carbon footprint is below the global average but above the sustainable level.</p>
+                        {% else %}
+                            <p class="sustainability-message high">Your carbon footprint is above the global average.</p>
+                        {% endif %}
+                    {% endif %}
+
+                    <small>⚠️ Using fallback data - Live benchmarks unavailable</small>
+                </div>
             {% endif %}
         </div>
 
@@ -102,6 +151,10 @@
             <a href="{{ url_for('download_report') }}" class="button">Download PDF Report</a>
         </div>
 
-        <a href="{{ url_for('index') }}" class="button">Start Over</a>
+        <div class="action-links">
+            <a href="{{ url_for('index') }}" class="button">Start Over</a>
+            <a href="{{ url_for('data_entry') }}" class="button primary">New Assessment</a>
+        </div>
+
     </div>
 {% endblock %}

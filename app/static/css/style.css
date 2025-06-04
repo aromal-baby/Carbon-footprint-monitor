@@ -462,6 +462,78 @@ main {
     text-decoration: underline;
 }
 
+/* Benchmark Comparisons */
+.benchmark-comparisons {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 240, 0.9));
+    border-radius: 8px;
+    border-left: 4px solid #405e43;
+    backdrop-filter: blur(5px);
+}
+
+.benchmark-comparisons h4 {
+    color: #405e43;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.benchmark-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.benchmark-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 6px;
+    border-left: 3px solid #3498db;
+    transition: transform 0.3s ease;
+}
+
+.benchmark-item:hover {
+    transform: translateX(3px);
+}
+
+.benchmark-item.sustainable {
+    border-left-color: #27ae60;
+    background: rgba(39, 174, 96, 0.1);
+}
+
+.benchmark-label {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.benchmark-value {
+    font-weight: bold;
+    color: #405e43;
+    font-size: 1.1rem;
+}
+
+.benchmark-details {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.benchmark-details small {
+    display: block;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 0.25rem;
+}
+
+.fallback-note {
+    color: #e67e22 !important;
+    font-weight: 500;
+}
+
 /* Action Links */
 .action-links {
     margin-top: 2rem;
@@ -523,6 +595,16 @@ footer {
 
     .reports-list {
         overflow-x: auto;
+    }
+
+    .benchmark-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .benchmark-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
     }
 }
 

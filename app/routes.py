@@ -7,16 +7,18 @@ from app.services import pdf_service
 from app.services.data_service import DataService
 from app.services.report_service import ReportService
 from app.services.pdf_service import PDFService
+from app.services.benchmark_service import BenchmarkService
 import json
 import os
 import io
 import datetime
 
 
-calculator = CarbonCalculator()     # Calculator instance
-data_service = DataService()        # Data service instance
-report_service = ReportService()    # Report service instance
-pdf_service =PDFService()           # PDF service instance
+calculator = CarbonCalculator()         # Calculator instance
+data_service = DataService()            # Data service instance
+report_service = ReportService()        # Report service instance
+pdf_service = PDFService()              # PDF service instance
+benchmark_service = BenchmarkService()  # Benchmark service
 
 
 @app.route('/')
@@ -35,8 +37,9 @@ def data_entry():
     if request.method == 'POST':
         # Process form data
         user_data = {
-            'user_type': request.form.get('user_type'),
-            'date': datetime.datetime.now().strftime('%Y-%m-%d')
+            'user_type': request.form.get('user_type'),             # Capturing individual/organisation
+            'country': request.form.get('country'),                 # Capturing country
+            'date': datetime.datetime.now().strftime('%Y-%m-%d')    # Capturing time
         }
 
 
@@ -257,6 +260,10 @@ def results():
     # Calculate carbon footprint
     footprint_data = calculator.calculate_footprint(user_data)
 
+    # Getting the benchmark data for the respective country
+    country = user_data.get('country', 'Germany')
+    benchmarks = benchmark_service.get_benchmarks(country)
+
     # Generate charts
     charts = report_service.generate_charts(footprint_data)
 
@@ -267,6 +274,7 @@ def results():
                            title='Your Carbon Footprint',
                            user_data=user_data,
                            footprint_data=footprint_data,
+                           benchmarks=benchmarks,
                            charts=charts)
 
 
