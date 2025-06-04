@@ -114,17 +114,18 @@ mode of transports.
 
 ## Example Usage
 
-# Example: Calculate carbon footprint
-from app.models.carbon_calculator import CarbonCalculator
-
-calculator = CarbonCalculator()
-user_data = {
-    'transportation': {'car': {'weekly_km': 100, 'fuel_type': 'petrol'}},
-    'energy': {'electricity': {'monthly_kwh': 300, 'renewable_percentage': 20}}
-}
-
-results = calculator.calculate_footprint(user_data)
-print(f"Total footprint: {results['total']:.2f} kg CO2e")
+```python
+   # Example: Calculate carbon footprint
+   from app.models.carbon_calculator import CarbonCalculator
+   
+   calculator = CarbonCalculator()
+   user_data = {
+       'transportation': {'car': {'weekly_km': 100, 'fuel_type': 'petrol'}},
+       'energy': {'electricity': {'monthly_kwh': 300, 'renewable_percentage': 20}}
+   }
+   
+   results = calculator.calculate_footprint(user_data)
+   print(f"Total footprint: {results['total']:.2f} kg CO2e")
 
 ## Testing
 
