@@ -9,17 +9,17 @@
         <div class="form-section">
             <h3>Monthly Spending</h3>
             <div class="form-group">
-                <label for="clothing">Monthly spending on clothing (€):</label>
+                <label for="clothing">Monthly spending on clothing ({{ currency.symbol }}):</label>
                 <input type="number" name="clothing" id="clothing" min="0" step="0.01" value="0">
             </div>
 
             <div class="form-group">
-                <label for="electronics">Monthly spending on electronics (€):</label>
+                <label for="electronics">Monthly spending on electronics ({{ currency.symbol }}):</label>
                 <input type="number" name="electronics" id="electronics" min="0" step="0.01" value="0">
             </div>
 
             <div class="form-group">
-                <label for="household_items">Monthly spending on household items (€):</label>
+                <label for="household_items">Monthly spending on household items ({{ currency.symbol }}):</label>
                 <input type="number" name="household_items" id="household_items" min="0" step="0.01" value="0">
             </div>
         </div>
@@ -35,4 +35,29 @@
 
         <button type="submit" class="button">Calculate Footprint</button>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Adding currency symbol to input fields visually
+            const currencyInput = document.querySelectorAll('input[type="number"]');
+
+            currencyInput.forEach(function(input) {
+                // Creating a wrapper div
+                const wrapper = document.createElement('div');
+                wrapper.className = 'currency-input-wrapper';
+
+                // Inserting wrapper before input
+                input.parentNode.insertBefore(wrapper, input);
+
+                // Crating currency indicator
+                const currencyIndicator = document.createElement('span');
+                currencyIndicator.className = 'currency-indicator';
+                currencyIndicator.textContent = currencySymbol;
+
+                // Moving input into wrapper and adding indicator
+                wrapper.appendChild(currencyIndicator);
+                wrapper.appendChild(input);
+            });
+        })
+    </script>
 {% endblock %}

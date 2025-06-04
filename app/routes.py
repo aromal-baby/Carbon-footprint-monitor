@@ -8,6 +8,7 @@ from app.services.data_service import DataService
 from app.services.report_service import ReportService
 from app.services.pdf_service import PDFService
 from app.services.benchmark_service import BenchmarkService
+from app.services.currency_service import CurrencyService
 import json
 import os
 import io
@@ -19,6 +20,7 @@ data_service = DataService()            # Data service instance
 report_service = ReportService()        # Report service instance
 pdf_service = PDFService()              # PDF service instance
 benchmark_service = BenchmarkService()  # Benchmark service
+currency_service = CurrencyService()    # Currency service instance
 
 
 @app.route('/')
@@ -224,6 +226,11 @@ def products_entry():
         # Redirect to initial data entry if no user data exists
         return redirect(url_for('data_entry'))
 
+    # Getting currency based on the selected country
+    user_data = session.get('user_data', {})
+    country = user_data.get('country', 'Germany')
+    currency = currency_service.get_currency_for_country(country)
+
     if request.method == 'POST':
         products_data = {}
 
@@ -234,18 +241,22 @@ def products_entry():
             'household_items': float(request.form.get('household_items', 0))
         }
 
+        # Storing currency info
+        products_data['currency'] = currency
+
         # Secondhand percentage
         products_data['secondhand_percentage'] = float(request.form.get('secondhand_percentage', 0))
 
         # Add products data to session
-        user_data = session.get('user_data', {})
         user_data['products'] = products_data
         session['user_data'] = user_data
 
         # Calculate footprint and show results
         return redirect(url_for('results'))
 
-    return render_template('products.html', title='Products Data')
+    return render_template('products.html',
+                           title='Products Data',
+                           currency=currency)
 
 
 @app.route('/results')

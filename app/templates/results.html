@@ -12,6 +12,12 @@
                 <p class="per-capita-footprint">Per Capita Annual Carbon Footprint: <strong>{{ "%.2f"|format(footprint_data.per_capita) }} kg CO2e</strong></p>
             {% endif %}
 
+            {% if user_data.products and user_data.products.currency %}
+            <div class="currency-info">
+                <small>💰 Product purchases calculated in {{ user_data.products.currency.name }} ({{ user_data.products.currency.symbol }})</small>
+            </div>
+            {% endif %}
+
             <!-- Dynamic Benchmark Comparisons from Our World in Data API -->
             {% if benchmarks %}
                 <div class="benchmark-comparisons">
