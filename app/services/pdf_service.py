@@ -108,34 +108,6 @@ class PDFService:
 
         elements.append(Spacer(1, 0.25*inch))
 
-
-        """# Adding charts if available
-        if charts and 'category_breakdown' in charts:
-            # Add charts if provided
-            if isinstance(charts['category_breakdown'], str) and charts['category_breakdown'].startswith('data:image/png;base64,'):
-                # Extract base64 image data
-                import base64
-                img_data = charts['category_breakdown'].split(',')[1]
-                img_bytes = base64.b64decode(img_data)
-
-                # Saving temp image
-                temp_img_path = os.path.join(self.static_dir, 'temp_chart.png')
-                with open(temp_img_path, 'wb') as f:
-                    f.write(img_bytes)
-
-
-                # Add image to PDF
-                img = Image(temp_img_path, width=5*inch, height=3*inch)
-                elements.append(img)
-                elements.append(Spacer(1, 0.25*inch))
-
-                # Clean up temp file
-                try:
-                    os.remove(temp_img_path)
-                except:
-                    pass """
-
-
         # Break down by category
         elements.append(Paragraph("Breakdown by Category", normal_style))
 
