@@ -1,0 +1,96 @@
+{
+    "user_data": {
+        "date": "2025-06-01",
+        "energy": {
+            "electricity": {
+                "monthly_kwh": 0.0,
+                "renewables_percentage": 0.0
+            }
+        },
+        "food": {
+            "diet_type": "omnivore",
+            "local_food_percentage": 80.0,
+            "meat_consumption": {
+                "fish": 12.0,
+                "poultry": 1.0,
+                "red_meat": 5.0
+            }
+        },
+        "household_size": 1,
+        "name": "AROMAL BABY",
+        "products": {
+            "monthly_spending": {
+                "clothing": 0.0,
+                "electronics": 0.0,
+                "household_items": 0.0
+            },
+            "secondhand_percentage": 0.0
+        },
+        "transportation": {
+            "public_transport": {
+                "weekly_km": 100.0
+            }
+        },
+        "user_type": "Individual",
+        "waste": {
+            "composting": true,
+            "general_waste": {
+                "weekly_kg": 12.0
+            },
+            "recycling": {
+                "glass": 0.0,
+                "metal": 0.0,
+                "paper": 0.0,
+                "plastic": 0.0
+            }
+        }
+    },
+    "footprint_data": {
+        "total": 1363.56,
+        "categories": {
+            "transportation": {
+                "total": 301.6,
+                "breakdown": {
+                    "public_transport": 301.6
+                }
+            },
+            "energy": {
+                "total": 0.0,
+                "breakdown": {
+                    "electricity": 0.0
+                }
+            },
+            "waste": {
+                "total": 258.9599999999999,
+                "breakdown": {
+                    "general_waste": 361.91999999999996,
+                    "recycling": {
+                        "glass": 0.0,
+                        "metal": 0.0,
+                        "paper": 0.0,
+                        "plastic": 0.0
+                    },
+                    "composting_benefits": -102.96000000000001
+                }
+            },
+            "food": {
+                "total": 803.0,
+                "breakdown": {
+                    "base_diet": 912.5,
+                    "local_food_benefit": -109.5
+                }
+            },
+            "products": {
+                "total": 0.0,
+                "breakdown": {
+                    "clothing": 0.0,
+                    "electronics": 0.0,
+                    "household_items": 0.0
+                }
+            }
+        },
+        "per_capita": 1363.56
+    },
+    "timestamp": "20250601_194142",
+    "date": "2025-06-01 19:41:42"
+}

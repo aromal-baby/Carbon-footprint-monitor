@@ -1,0 +1,113 @@
+{
+    "user_data": {
+        "contact_person": "AROMAL BABY",
+        "country": "India",
+        "date": "2025-06-25",
+        "employees": 10,
+        "energy": {
+            "electricity": {
+                "monthly_kwh": 0.0,
+                "renewables_percentage": 0.0
+            }
+        },
+        "food": {
+            "diet_type": "omnivore",
+            "local_food_percentage": 0.0,
+            "meat_consumption": {
+                "fish": 0.0,
+                "poultry": 0.0,
+                "red_meat": 0.0
+            }
+        },
+        "industry": "Education",
+        "org_name": "AB10000 pvt ltd.",
+        "products": {
+            "currency": {
+                "code": "INR",
+                "name": "Indian Rupee",
+                "symbol": "\u20b9"
+            },
+            "monthly_spending": {
+                "clothing": 123.0,
+                "electronics": 567.0,
+                "household_items": 789.0
+            },
+            "secondhand_percentage": 90.0
+        },
+        "transportation": {
+            "air_travel": {
+                "long_flight": 5,
+                "short_flight": 10
+            },
+            "car": {
+                "fuel_type": "petrol",
+                "weekly_km": 1000.0
+            },
+            "public_transport": {
+                "weekly_km": 10000.0
+            }
+        },
+        "user_type": "Organization",
+        "waste": {
+            "composting": false,
+            "general_waste": {
+                "weekly_kg": 1234.0
+            },
+            "recycling": {
+                "glass": 123.0,
+                "metal": 4567.0,
+                "paper": 123.0,
+                "plastic": 123.0
+            }
+        }
+    },
+    "footprint_data": {
+        "total": 86295.84,
+        "categories": {
+            "transportation": {
+                "total": 40144.0,
+                "breakdown": {
+                    "car": 9984.0,
+                    "public_transport": 30160.0,
+                    "air_travel": 0
+                }
+            },
+            "energy": {
+                "total": 0.0,
+                "breakdown": {
+                    "electricity": 0.0
+                }
+            },
+            "waste": {
+                "total": 42638.7,
+                "breakdown": {
+                    "general_waste": 37217.439999999995,
+                    "recycling": {
+                        "glass": 191.88,
+                        "metal": 4749.68,
+                        "paper": 255.84,
+                        "plastic": 223.86
+                    }
+                }
+            },
+            "food": {
+                "total": 912.5,
+                "breakdown": {
+                    "base_diet": 912.5
+                }
+            },
+            "products": {
+                "total": 2600.6399999999994,
+                "breakdown": {
+                    "clothing": 738.0,
+                    "electronics": 4762.799999999999,
+                    "household_items": 3787.2000000000003,
+                    "secondhand_benefit": -6687.360000000001
+                }
+            }
+        },
+        "per_capita": 8629.583999999999
+    },
+    "timestamp": "20250625_150539",
+    "date": "2025-06-25 15:05:39"
+}
