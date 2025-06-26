@@ -17,7 +17,7 @@ class CarbonCalculator:
 
     def calculate_footprint(self, data):
         """Calculate total carbon footprint from all categories"""
-        try:
+         try:
             results = {
                 'total': 0,
                 'categories': {}
