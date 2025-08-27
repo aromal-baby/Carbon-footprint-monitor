@@ -17,7 +17,7 @@ The carbon footprint monitor helps users calculate their carbon emissions across
 - **Global Benchmarking**: Real-time comparisons with country and global averages
 
 ## Architecture
-
+```
 Carbon Footprint Monitor/
 ├── app/
 │   ├── init.py              # Flask application initialization
@@ -40,7 +40,7 @@ Carbon Footprint Monitor/
 ├── tests/                       # Unit tests
 ├── requirements.txt             # Project dependencies
 └── run.py                       # Application entry point
-
+````
 
 ## Installation
 
